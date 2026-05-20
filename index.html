@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Spanish World</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="login" id="loginPage">
+    <div class="login-bg">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+    <div class="login-box">
+        <div class="login-logo">
+            <span class="logo-icon">🌎</span>
+            <h1>SPANISH WORLD</h1>
+        </div>
+        <p class="login-sub">Aprenda espanhol do básico ao avançado</p>
+        <div class="tabs-login">
+            <button class="ativo" onclick="trocarForm('login', this)">LOGIN</button>
+            <button onclick="trocarForm('cadastro', this)">CADASTRAR</button>
+        </div>
+        <form id="formLogin" class="form-area ativo" data-tipo="login">
+            <div class="input-group">
+                <span class="input-icon">✉</span>
+                <input type="email" id="loginEmail" placeholder="Digite seu email" required>
+            </div>
+            <div class="input-group campo-senha">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="loginSenha" placeholder="Senha de 8 dígitos" required maxlength="8" minlength="8">
+                <span class="ver-senha" id="eyeLogin" onclick="toggleSenha('loginSenha','eyeLogin')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+            </div>
+            <button type="submit" class="btn-primary">Entrar</button>
+        </form>
+        <form id="formCadastro" class="form-area" data-tipo="cadastro">
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" id="cadNome" placeholder="Digite seu nome" required>
+            </div>
+            <div class="input-group">
+                <span class="input-icon">✉</span>
+                <input type="email" id="cadEmail" placeholder="Digite seu email" required>
+            </div>
+            <div class="input-group campo-senha">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="cadSenha" placeholder="Crie uma senha de 8 dígitos" required maxlength="8" minlength="8">
+                <span class="ver-senha" id="eyeCad" onclick="toggleSenha('cadSenha','eyeCad')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+            </div>
+            <button type="submit" class="btn-primary">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<!-- ===== SITE ===== -->
+<div class="site" id="site">
+    <header>
+        <button class="btn-perfil" onclick="abrirPerfil()">
+            <div class="hamburguer"><span></span><span></span></div>
+            Meu Perfil
+        </button>
+        <div class="header-center">
+            <h1>SPANISH WORLD</h1>
+            <p>Estude espanhol com aulas modernas e práticas</p>
+        </div>
+    </header>
+
+    <!-- PAINEL PERFIL -->
+    <div class="painel-perfil" id="painelPerfil">
+        <div class="perfil-header">
+            <h3>👤 Meu Perfil</h3>
+            <span class="fechar-perfil" onclick="fecharPerfil()">✕</span>
+        </div>
+        <div class="perfil-info">
+            <div class="info-item"><strong>Nome</strong><span id="perfilNome">-</span></div>
+            <div class="info-item"><strong>Email</strong><span id="perfilEmail">-</span></div>
+            <div class="info-item">
+                <strong>Senha</strong>
+                <div class="senha-container">
+                    <span id="perfilSenha">••••••••</span>
+                    <span class="ver-senha-perfil" id="eyePerfil" onclick="toggleSenhaPerfil()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </span>
+                </div>
+            </div>
+            <div class="pontuacao-perfil">
+                <h3>🏆 Pontuação Total</h3>
+                <div class="pontos" id="pontosTotal">0</div>
+                <p>pontos acumulados</p>
+            </div>
+        </div>
+        <button class="btn-sair" onclick="logout()">🚪 Sair da conta</button>
+    </div>
+    <div class="overlay-perfil" id="overlayPerfil" onclick="fecharPerfil()"></div>
+
+    <!-- NAVEGAÇÃO -->
+    <nav id="navBar">
+        <ul>
+            <li onclick="mostrarSecao('inicio')">INÍCIO</li>
+            <li class="menu-aulas" id="menuAulas">
+                <span onclick="abrirMenu()">AULAS <span class="seta-menu" id="setaMenu">▼</span></span>
+                <ul class="submenu" id="submenu">
+                    <li onclick="mostrarSecao('basico1')">🔤 Espanhol - Básico 1</li>
+                    <li onclick="mostrarSecao('basico2')">📗 Espanhol - Básico 2</li>
+                    <li onclick="mostrarSecao('intermediario')">📘 Espanhol - Intermediário</li>
+                    <li onclick="mostrarSecao('avancado')">📕 Espanhol - Avançado</li>
+                    <li onclick="mostrarSecao('conversacao')">💬 Conversação</li>
+                    <li onclick="mostrarSecao('pronuncia')">🎙️ Pronúncia</li>
+                    <li onclick="mostrarSecao('expressoes')">🗣️ Expressões Idiomáticas</li>
+                </ul>
+            </li>
+            <li onclick="mostrarSecao('exercicios')">EXERCÍCIOS</li>
+            <li onclick="mostrarSecao('ranking')">RANKING</li>
+            <li onclick="mostrarSecao('professores')">PROFESSORES</li>
+            <li onclick="mostrarSecao('contato')">CONTATO</li>
+        </ul>
+    </nav>
+
+    <!-- ===== SEÇÃO: INÍCIO ===== -->
+    <section class="secao ativo" id="inicio">
+        <div class="banner">
+            <div class="banner-bg">
+                <div class="banner-particle"></div>
+                <div class="banner-particle"></div>
+                <div class="banner-particle"></div>
+                <div class="banner-particle"></div>
+                <div class="banner-particle"></div>
+                <div class="banner-wave"></div>
+            </div>
+            <div class="banner-content">
+                <div class="banner-badge">🌟 Plataforma #1 de Espanhol</div>
+                <h2>Fale Espanhol com <span class="banner-destaque">Confiança</span></h2>
+                <p>Aulas interativas, atividades gamificadas e conversação em tempo real.</p>
+                <div class="banner-btns">
+                    <button onclick="mostrarSecao('exercicios')" class="btn-banner-primary">🚀 COMEÇAR AGORA</button>
+                    <button onclick="mostrarSecao('conversacao')" class="btn-banner-secondary">💬 Praticar Conversação</button>
+                </div>
+                <div class="banner-stats">
+                    <div class="stat"><span class="stat-num">21</span><span class="stat-label">Países</span></div>
+                    <div class="stat"><span class="stat-num">500M</span><span class="stat-label">Falantes</span></div>
+                    <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Atividades</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="card" onclick="abrirDetalheCard('gramatica')">
+                <div class="card-icon">📚</div>
+                <h2>GRAMÁTICA</h2>
+                <p>Aprenda verbos, frases e estruturas.</p>
+                <span class="card-arrow">→</span>
+            </div>
+            <div class="card" onclick="abrirDetalheCard('vocabulario')">
+                <div class="card-icon">📖</div>
+                <h2>VOCABULÁRIO</h2>
+                <p>Expanda suas palavras em espanhol.</p>
+                <span class="card-arrow">→</span>
+            </div>
+            <div class="card" onclick="mostrarSecao('conversacao')">
+                <div class="card-icon">💬</div>
+                <h2>CONVERSAÇÃO</h2>
+                <p>Pratique diálogos do dia a dia.</p>
+                <span class="card-arrow">→</span>
+            </div>
+            <div class="card" onclick="abrirDetalheCard('cultura')">
+                <div class="card-icon">🌎</div>
+                <h2>CULTURA</h2>
+                <p>Conheça músicas, países e costumes.</p>
+                <span class="card-arrow">→</span>
+            </div>
+        </div>
+        <div class="secao-destaque">
+            <h3>Por que aprender espanhol?</h3>
+            <div class="motivos-grid">
+                <div class="motivo"><span>🌍</span><p>2ª língua mais falada no mundo</p></div>
+                <div class="motivo"><span>💼</span><p>Abre portas no mercado de trabalho</p></div>
+                <div class="motivo"><span>✈️</span><p>Viaje por 21 países sem barreiras</p></div>
+                <div class="motivo"><span>🧠</span><p>Melhora a memória e cognição</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: EXERCÍCIOS ===== -->
+    <section class="secao" id="exercicios">
+        <div class="categorias-container">
+            <h2>🎮 Escolha uma Categoria</h2>
+            <p class="sub-titulo">Cada categoria tem 10 perguntas valendo 10 pontos cada!</p>
+            <div class="grid-categorias">
+                <div class="categoria-card" onclick="iniciarQuiz('basico')">
+                    <div class="icone-categoria">📚</div>
+                    <h3>Básico</h3>
+                    <p>Saudações e frases simples</p>
+                    <span class="badge-dif fácil">Fácil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('animais')">
+                    <div class="icone-categoria">🐶</div>
+                    <h3>Animais</h3>
+                    <p>Nomes de animais em espanhol</p>
+                    <span class="badge-dif fácil">Fácil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('cores')">
+                    <div class="icone-categoria">🎨</div>
+                    <h3>Cores</h3>
+                    <p>Aprenda todas as cores</p>
+                    <span class="badge-dif fácil">Fácil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('comida')">
+                    <div class="icone-categoria">🍕</div>
+                    <h3>Comida</h3>
+                    <p>Alimentos e bebidas</p>
+                    <span class="badge-dif medio">Médio</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('numeros')">
+                    <div class="icone-categoria">🔢</div>
+                    <h3>Números</h3>
+                    <p>Conte de 1 a 100</p>
+                    <span class="badge-dif fácil">Fácil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('familia')">
+                    <div class="icone-categoria">👨‍👩‍👧</div>
+                    <h3>Família</h3>
+                    <p>Membros da família</p>
+                    <span class="badge-dif fácil">Fácil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('verbos')">
+                    <div class="icone-categoria">✍️</div>
+                    <h3>Verbos</h3>
+                    <p>Verbos no presente e passado</p>
+                    <span class="badge-dif medio">Médio</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('corpo')">
+                    <div class="icone-categoria">🧍</div>
+                    <h3>Corpo Humano</h3>
+                    <p>Partes do corpo em espanhol</p>
+                    <span class="badge-dif medio">Médio</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('clima')">
+                    <div class="icone-categoria">⛅</div>
+                    <h3>Clima</h3>
+                    <p>Tempo e estações do ano</p>
+                    <span class="badge-dif medio">Médio</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('viagem')">
+                    <div class="icone-categoria">✈️</div>
+                    <h3>Viagem</h3>
+                    <p>Frases essenciais para viajar</p>
+                    <span class="badge-dif dificil">Difícil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('trabalho')">
+                    <div class="icone-categoria">💼</div>
+                    <h3>Trabalho</h3>
+                    <p>Vocabulário profissional</p>
+                    <span class="badge-dif dificil">Difícil</span>
+                </div>
+                <div class="categoria-card" onclick="iniciarQuiz('expressoes')">
+                    <div class="icone-categoria">💡</div>
+                    <h3>Expressões</h3>
+                    <p>Frases idiomáticas e gírias</p>
+                    <span class="badge-dif dificil">Difícil</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: QUIZ ===== -->
+    <section class="secao" id="quiz">
+        <div class="quiz-container">
+            <button class="btn-voltar" onclick="mostrarSecao('exercicios')">← Voltar</button>
+            <div class="quiz-header">
+                <h2 id="tituloQuiz">Quiz de Espanhol</h2>
+                <div class="placar">
+                    <span>👤 <b id="nomeJogador">Aluno</b></span>
+                    <span>⭐ <b id="pontosAtual">0</b> pts</span>
+                </div>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+            <div id="quiz-box"></div>
+            <div class="quiz-controles">
+                <button id="btnProxima" onclick="proximaPergunta()" disabled>Próxima →</button>
+                <button id="btnFinalizar" onclick="finalizarQuiz()" style="display:none">🏆 Ver Resultado</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: CONVERSAÇÃO (IA) ===== -->
+    <section class="secao" id="conversacao">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>💬 CONVERSAÇÃO COM IA</h2>
+            <p class="sub-titulo">Pratique espanhol com nosso assistente de IA. Pode escrever em português ou espanhol!</p>
+
+            <div class="chat-wrapper">
+                <div class="chat-topbar">
+                    <div class="chat-avatar">🤖</div>
+                    <div>
+                        <strong>Profesora Sofia</strong>
+                        <small>Assistente de Espanhol · Online</small>
+                    </div>
+                    <div class="chat-status">● Online</div>
+                </div>
+                <div class="chat-box" id="chatBox">
+                    <div class="msg-bot">
+                        <span class="msg-avatar">🤖</span>
+                        <div class="msg-bubble">¡Hola! Soy la Profesora Sofia 😊 Estou aqui para te ajudar a praticar espanhol! Podemos conversar sobre qualquer tema — viagens, família, trabalho, gramática... O que você quer aprender hoje?</div>
+                    </div>
+                </div>
+                <div class="chat-sugestoes" id="chatSugestoes">
+                    <button onclick="enviarSugestao('Como me apresento em espanhol?')">Como me apresento?</button>
+                    <button onclick="enviarSugestao('Quero aprender sobre verbos')">Verbos</button>
+                    <button onclick="enviarSugestao('Me ensine expressões do dia a dia')">Expressões</button>
+                    <button onclick="enviarSugestao('Como peço informações em espanhol?')">Pedir info</button>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Escreva em português ou espanhol..." onkeypress="if(event.key==='Enter')enviarMensagem()">
+                    <button onclick="enviarMensagem()" class="btn-enviar">➤</button>
+                </div>
+            </div>
+
+            <div class="dialogos-lista">
+                <h3 style="color:#FF6A00;margin-bottom:20px;font-size:22px">📌 Diálogos Prontos para Estudar</h3>
+                <div class="dialogo-card">
+                    <h3>🗣️ Apresentação Pessoal</h3>
+                    <div class="frase-exemplo">
+                        <p><strong>Espanhol:</strong> Hola, me llamo Juan. ¿Y tú? Soy de Brasil. ¿De dónde eres tú?</p>
+                        <p><strong>Português:</strong> Olá, meu nome é Juan. E você? Sou do Brasil. De onde você é?</p>
+                    </div>
+                </div>
+                <div class="dialogo-card">
+                    <h3>📍 Pedindo Informações</h3>
+                    <div class="frase-exemplo">
+                        <p><strong>Espanhol:</strong> ¿Dónde está el baño, por favor? — Está a la derecha.</p>
+                        <p><strong>Português:</strong> Onde fica o banheiro, por favor? — Fica à direita.</p>
+                    </div>
+                </div>
+                <div class="dialogo-card">
+                    <h3>🍽️ No Restaurante</h3>
+                    <div class="frase-exemplo">
+                        <p><strong>Espanhol:</strong> ¿Me puede traer la carta, por favor? ¿Cuánto cuesta esto?</p>
+                        <p><strong>Português:</strong> Pode me trazer o cardápio, por favor? Quanto custa isso?</p>
+                    </div>
+                </div>
+                <div class="dialogo-card">
+                    <h3>🛒 Fazendo Compras</h3>
+                    <div class="frase-exemplo">
+                        <p><strong>Espanhol:</strong> ¿Tienen esto en otra talla? ¿Aceptan tarjeta de crédito?</p>
+                        <p><strong>Português:</strong> Vocês têm isso em outro tamanho? Aceitam cartão de crédito?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: RANKING ===== -->
+    <section class="secao" id="ranking">
+        <div class="ranking-container">
+            <h2>🏆 Ranking dos Melhores</h2>
+            <p class="sub-titulo">Os 10 maiores pontuadores da plataforma</p>
+            <div id="tabelaRanking"></div>
+            <button class="btn-limpar" onclick="limparRanking()">🗑️ Limpar Ranking</button>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: BÁSICO 1 ===== -->
+    <section class="secao" id="basico1">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>🔤 Espanhol — Básico 1</h2>
+            <p class="sub-titulo">Introdução, alfabeto, saudações e primeiras frases</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>👋 Saudações</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Espanhol</th><th>Português</th></tr>
+                        <tr><td>¡Hola!</td><td>Olá!</td></tr>
+                        <tr><td>Buenos días</td><td>Bom dia</td></tr>
+                        <tr><td>Buenas tardes</td><td>Boa tarde</td></tr>
+                        <tr><td>Buenas noches</td><td>Boa noite</td></tr>
+                        <tr><td>¿Cómo estás?</td><td>Como você está?</td></tr>
+                        <tr><td>Bien, gracias</td><td>Bem, obrigado</td></tr>
+                        <tr><td>Adiós / Hasta luego</td><td>Tchau / Até logo</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🔤 O Alfabeto Espanhol</h3>
+                    <p style="line-height:2;font-size:18px;color:#FF6A00;font-weight:bold">A B C D E F G H I J K L M N Ñ O P Q R S T U V W X Y Z</p>
+                    <p style="margin-top:10px;color:#555">O espanhol tem 27 letras — a letra <strong>Ñ</strong> é exclusiva!</p>
+                </div>
+                <div class="aula-card">
+                    <h3>🙋 Apresentação Pessoal</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Espanhol</th><th>Português</th></tr>
+                        <tr><td>Me llamo...</td><td>Meu nome é...</td></tr>
+                        <tr><td>Soy de Brasil</td><td>Sou do Brasil</td></tr>
+                        <tr><td>Tengo 25 años</td><td>Tenho 25 anos</td></tr>
+                        <tr><td>Soy estudiante</td><td>Sou estudante</td></tr>
+                        <tr><td>Mucho gusto</td><td>Muito prazer</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>✏️ Exercício Rápido</h3>
+                    <p style="margin-bottom:15px">Complete as frases:</p>
+                    <div class="exercicio-rapido">
+                        <p>1. "¡_____!" (Olá) → <strong>¡Hola!</strong></p>
+                        <p>2. "Buenos _____" (Bom dia) → <strong>Buenos días</strong></p>
+                        <p>3. "Me _____ Ana" (Me chamo Ana) → <strong>Me llamo Ana</strong></p>
+                    </div>
+                    <button class="btn-primary" style="margin-top:15px" onclick="iniciarQuiz('basico')">🎮 Praticar com Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: BÁSICO 2 ===== -->
+    <section class="secao" id="basico2">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>📗 Espanhol — Básico 2</h2>
+            <p class="sub-titulo">Números, cores, família e vocabulário do cotidiano</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>🔢 Números de 1 a 20</h3>
+                    <div class="numeros-grid">
+                        <span>1 - uno</span><span>2 - dos</span><span>3 - tres</span><span>4 - cuatro</span>
+                        <span>5 - cinco</span><span>6 - seis</span><span>7 - siete</span><span>8 - ocho</span>
+                        <span>9 - nueve</span><span>10 - diez</span><span>11 - once</span><span>12 - doce</span>
+                        <span>13 - trece</span><span>14 - catorce</span><span>15 - quince</span><span>16 - dieciséis</span>
+                        <span>17 - diecisiete</span><span>18 - dieciocho</span><span>19 - diecinueve</span><span>20 - veinte</span>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>🎨 Cores</h3>
+                    <div class="cores-lista">
+                        <div class="cor-item" style="--cor:#FF0000"><span class="cor-bolinha"></span>Rojo (Vermelho)</div>
+                        <div class="cor-item" style="--cor:#0000FF"><span class="cor-bolinha"></span>Azul (Azul)</div>
+                        <div class="cor-item" style="--cor:#00AA00"><span class="cor-bolinha"></span>Verde (Verde)</div>
+                        <div class="cor-item" style="--cor:#FFCC00"><span class="cor-bolinha"></span>Amarillo (Amarelo)</div>
+                        <div class="cor-item" style="--cor:#FF6A00"><span class="cor-bolinha"></span>Naranja (Laranja)</div>
+                        <div class="cor-item" style="--cor:#800080"><span class="cor-bolinha"></span>Morado (Roxo)</div>
+                        <div class="cor-item" style="--cor:#FFC0CB"><span class="cor-bolinha"></span>Rosa (Rosa)</div>
+                        <div class="cor-item" style="--cor:#000000"><span class="cor-bolinha"></span>Negro (Preto)</div>
+                        <div class="cor-item" style="--cor:#FFFFFF;outline:1px solid #ddd"><span class="cor-bolinha"></span>Blanco (Branco)</div>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>👨‍👩‍👧 Família</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Espanhol</th><th>Português</th></tr>
+                        <tr><td>Madre / Mamá</td><td>Mãe</td></tr>
+                        <tr><td>Padre / Papá</td><td>Pai</td></tr>
+                        <tr><td>Hermano / Hermana</td><td>Irmão / Irmã</td></tr>
+                        <tr><td>Abuelo / Abuela</td><td>Avô / Avó</td></tr>
+                        <tr><td>Tío / Tía</td><td>Tio / Tia</td></tr>
+                        <tr><td>Primo / Prima</td><td>Primo / Prima</td></tr>
+                        <tr><td>Hijo / Hija</td><td>Filho / Filha</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🏠 Lugares Comuns</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Espanhol</th><th>Português</th></tr>
+                        <tr><td>Casa</td><td>Casa</td></tr>
+                        <tr><td>Escuela / Colegio</td><td>Escola</td></tr>
+                        <tr><td>Supermercado</td><td>Supermercado</td></tr>
+                        <tr><td>Hospital</td><td>Hospital</td></tr>
+                        <tr><td>Aeropuerto</td><td>Aeroporto</td></tr>
+                        <tr><td>Restaurante</td><td>Restaurante</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: INTERMEDIÁRIO ===== -->
+    <section class="secao" id="intermediario">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>📘 Espanhol — Intermediário</h2>
+            <p class="sub-titulo">Verbos conjugados, tempos verbais e construção de frases</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>🔄 Verbos Regulares no Presente</h3>
+                    <p style="margin-bottom:10px;color:#666">Terminações: <strong>-ar</strong> (hablar), <strong>-er</strong> (comer), <strong>-ir</strong> (vivir)</p>
+                    <table class="tabela-aula">
+                        <tr><th>Pronome</th><th>Hablar</th><th>Comer</th><th>Vivir</th></tr>
+                        <tr><td>Yo</td><td>hablo</td><td>como</td><td>vivo</td></tr>
+                        <tr><td>Tú</td><td>hablas</td><td>comes</td><td>vives</td></tr>
+                        <tr><td>Él/Ella</td><td>habla</td><td>come</td><td>vive</td></tr>
+                        <tr><td>Nosotros</td><td>hablamos</td><td>comemos</td><td>vivimos</td></tr>
+                        <tr><td>Ellos</td><td>hablan</td><td>comen</td><td>viven</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>⚡ Verbos Irregulares Essenciais</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Pronome</th><th>Ser</th><th>Estar</th><th>Tener</th></tr>
+                        <tr><td>Yo</td><td>soy</td><td>estoy</td><td>tengo</td></tr>
+                        <tr><td>Tú</td><td>eres</td><td>estás</td><td>tienes</td></tr>
+                        <tr><td>Él/Ella</td><td>es</td><td>está</td><td>tiene</td></tr>
+                        <tr><td>Nosotros</td><td>somos</td><td>estamos</td><td>tenemos</td></tr>
+                        <tr><td>Ellos</td><td>son</td><td>están</td><td>tienen</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>📅 Pretérito Indefinido (Passado)</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Pronome</th><th>Hablar</th><th>Comer</th></tr>
+                        <tr><td>Yo</td><td>hablé</td><td>comí</td></tr>
+                        <tr><td>Tú</td><td>hablaste</td><td>comiste</td></tr>
+                        <tr><td>Él/Ella</td><td>habló</td><td>comió</td></tr>
+                        <tr><td>Nosotros</td><td>hablamos</td><td>comimos</td></tr>
+                        <tr><td>Ellos</td><td>hablaron</td><td>comieron</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🗣️ Ser vs. Estar</h3>
+                    <div style="padding:5px 0">
+                        <p style="color:#FF6A00;font-weight:bold;margin-bottom:8px">SER: características permanentes</p>
+                        <p>Soy brasileño · Ella es médica · El libro es azul</p>
+                    </div>
+                    <hr style="margin:10px 0;border-color:#eee">
+                    <div>
+                        <p style="color:#FF6A00;font-weight:bold;margin-bottom:8px">ESTAR: estados temporários e localização</p>
+                        <p>Estoy cansado · Está en casa · ¿Cómo estás?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: AVANÇADO ===== -->
+    <section class="secao" id="avancado">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>📕 Espanhol — Avançado</h2>
+            <p class="sub-titulo">Subjuntivo, condicional, expressões complexas e literatura</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>🌀 Modo Subjuntivo</h3>
+                    <p style="margin-bottom:10px;color:#555">Usado para expressar dúvida, desejo, possibilidade:</p>
+                    <div class="exemplo-box">
+                        <p>• Espero que <strong>vengas</strong> mañana. (Espero que venha amanhã)</p>
+                        <p>• Quiero que <strong>hables</strong> despacio. (Quero que fale devagar)</p>
+                        <p>• Es posible que <strong>llueva</strong>. (É possível que chova)</p>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>💫 Condicional</h3>
+                    <p style="margin-bottom:10px;color:#555">Expressa hipóteses e situações imaginárias:</p>
+                    <div class="exemplo-box">
+                        <p>• Si tuviera dinero, <strong>viajaría</strong> al mundo. (Se tivesse dinheiro, viajaria pelo mundo)</p>
+                        <p>• Si pudiera, <strong>aprendería</strong> cinco idiomas. (Se pudesse, aprenderia cinco idiomas)</p>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>📜 Literatura Hispânica</h3>
+                    <div class="autores-lista">
+                        <div class="autor-item"><span>🇨🇴</span><div><strong>Gabriel García Márquez</strong><p>Cem Anos de Solidão — Realismo mágico</p></div></div>
+                        <div class="autor-item"><span>🇨🇱</span><div><strong>Pablo Neruda</strong><p>Vinte Poemas de Amor — Poesia lírica</p></div></div>
+                        <div class="autor-item"><span>🇪🇸</span><div><strong>Cervantes</strong><p>Dom Quixote — Primeiro romance moderno</p></div></div>
+                        <div class="autor-item"><span>🇦🇷</span><div><strong>Jorge Luis Borges</strong><p>Ficções — Literatura fantástica</p></div></div>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>🎭 Expressões Avançadas</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Expressão</th><th>Significado</th></tr>
+                        <tr><td>No hay mal que por bien no venga</td><td>Não há mal que não venha para o bem</td></tr>
+                        <tr><td>A lo hecho, pecho</td><td>Ao mal feito, peito (assumir)</td></tr>
+                        <tr><td>Más vale tarde que nunca</td><td>Antes tarde do que nunca</td></tr>
+                        <tr><td>Camarón que se duerme, se lo lleva la corriente</td><td>Quem não se mexe fica para trás</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: PRONÚNCIA ===== -->
+    <section class="secao" id="pronuncia">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>🎙️ PRONÚNCIA</h2>
+            <p class="sub-titulo">Domine os sons do espanhol e seja entendido por nativos</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>🔊 Letras Especiais</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Letra</th><th>Som</th><th>Exemplo</th></tr>
+                        <tr><td><strong>Ñ</strong></td><td>"nh" do português</td><td>Niño (menino)</td></tr>
+                        <tr><td><strong>LL</strong></td><td>"lh" ou "j"</td><td>Llamo, Llave</td></tr>
+                        <tr><td><strong>J</strong></td><td>"r" suave</td><td>Jardín, Juego</td></tr>
+                        <tr><td><strong>RR</strong></td><td>"r" forte</td><td>Perro, Carro</td></tr>
+                        <tr><td><strong>H</strong></td><td>Mudo (silencioso)</td><td>Hola, Hablar</td></tr>
+                        <tr><td><strong>V</strong></td><td>= B no espanhol</td><td>Vaca, Vino</td></tr>
+                        <tr><td><strong>Z</strong></td><td>"s" no LatAm</td><td>Zapato, Zero</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🗣️ Acentuação</h3>
+                    <p style="margin-bottom:10px;color:#555">Regras de acento em espanhol:</p>
+                    <div class="exemplo-box">
+                        <p>• Palavras terminadas em vogal, N ou S: acento na penúltima sílaba</p>
+                        <p>• <strong>casa</strong>, <strong>comen</strong>, <strong>libros</strong></p>
+                        <hr style="margin:8px 0;border-color:#eee">
+                        <p>• Outras terminações: acento na última sílaba</p>
+                        <p>• <strong>hablar</strong>, <strong>ciudad</strong>, <strong>español</strong></p>
+                        <hr style="margin:8px 0;border-color:#eee">
+                        <p>• Acento gráfico (´) muda a regra: <strong>café</strong>, <strong>difícil</strong></p>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>🌎 Diferenças Regionais</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Região</th><th>Particularidade</th></tr>
+                        <tr><td>Espanha</td><td>Z e C pronunciados como "th" inglês</td></tr>
+                        <tr><td>México</td><td>LL pronunciado como "ll" suave</td></tr>
+                        <tr><td>Argentina</td><td>LL e Y pronunciados como "sh"</td></tr>
+                        <tr><td>Caribe</td><td>S final frequentemente omitido</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🎵 Trava-Línguas</h3>
+                    <div class="exemplo-box">
+                        <p><em>"Tres tristes tigres tragaban trigo en un trigal"</em></p>
+                        <p style="color:#FF6A00;margin-top:8px">Três tristes tigres comiam trigo em um trigal</p>
+                        <hr style="margin:10px 0;border-color:#eee">
+                        <p><em>"Pablito clavó un clavito. ¿Qué clavito clavó Pablito?"</em></p>
+                        <p style="color:#FF6A00;margin-top:8px">Pablito pregou um preguinho. Que preguinho Pablito pregou?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: EXPRESSÕES IDIOMÁTICAS ===== -->
+    <section class="secao" id="expressoes">
+        <div class="aula-container">
+            <button class="btn-voltar" onclick="mostrarSecao('inicio')">← Voltar</button>
+            <h2>🗣️ EXPRESSÕES IDIOMÁTICAS</h2>
+            <p class="sub-titulo">Fale como um nativo com expressões que não se traduzem literalmente</p>
+            <div class="aula-grid">
+                <div class="aula-card">
+                    <h3>😄 Expressões do Dia a Dia</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Expressão</th><th>Significado Real</th></tr>
+                        <tr><td>¡Qué guay! (Esp.)</td><td>Que legal!</td></tr>
+                        <tr><td>¡Qué padre! (Méx.)</td><td>Que ótimo!</td></tr>
+                        <tr><td>¡Bárbaro! (Arg.)</td><td>Incrível!</td></tr>
+                        <tr><td>Estar hecho polvo</td><td>Estar destruído/cansado</td></tr>
+                        <tr><td>No pegar ojo</td><td>Não pregar o olho (não dormir)</td></tr>
+                        <tr><td>Meter la pata</td><td>Meter o pé (errar)</td></tr>
+                        <tr><td>Tomar el pelo</td><td>Estar tirando sarro</td></tr>
+                        <tr><td>Estar en las nubes</td><td>Estar no mundo da lua</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>🤝 No Contexto Social</h3>
+                    <table class="tabela-aula">
+                        <tr><th>Expressão</th><th>Uso</th></tr>
+                        <tr><td>¿Qué tal?</td><td>E aí? / Como vai?</td></tr>
+                        <tr><td>¡Venga!</td><td>Vamos! / Tudo bem!</td></tr>
+                        <tr><td>¡Anda ya!</td><td>Não acredito!</td></tr>
+                        <tr><td>Por supuesto</td><td>Claro que sim!</td></tr>
+                        <tr><td>A ver...</td><td>Vamos ver... / Hmm...</td></tr>
+                        <tr><td>¡Qué va!</td><td>De jeito nenhum!</td></tr>
+                        <tr><td>¿En serio?</td><td>Sério mesmo?</td></tr>
+                    </table>
+                </div>
+                <div class="aula-card">
+                    <h3>💡 Provérbios Populares</h3>
+                    <div class="exemplo-box">
+                        <p>🌟 <em>"No hay mal que por bien no venga"</em> — Não há mal que não venha para o bem</p>
+                        <p>🌟 <em>"Más vale pájaro en mano que ciento volando"</em> — Mais vale um pássaro na mão que dois voando</p>
+                        <p>🌟 <em>"El que mucho abarca, poco aprieta"</em> — Quem muito quer, pouco tem</p>
+                        <p>🌟 <em>"En boca cerrada no entran moscas"</em> — Em boca fechada não entram moscas</p>
+                    </div>
+                </div>
+                <div class="aula-card">
+                    <h3>🎮 Quiz de Expressões</h3>
+                    <p style="margin-bottom:15px;color:#555">Teste seus conhecimentos das expressões idiomáticas!</p>
+                    <button class="btn-primary" onclick="iniciarQuiz('expressoes')">🎯 Iniciar Quiz de Expressões</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: PROFESSORES ===== -->
+    <section class="secao" id="professores">
+        <div class="professores-container">
+            <h2>👩‍🏫 Nossa Equipe de Professores</h2>
+            <p class="sub-titulo">Conheça os especialistas que criaram o conteúdo da plataforma</p>
+            <div class="professores-grid">
+                <div class="prof-card">
+                    <div class="prof-avatar">👩‍🏫</div>
+                    <h3>Prof.ª María González</h3>
+                    <span class="prof-badge">Nativa · Espanha</span>
+                    <p>Especialista em gramática e literatura espanhola. 15 anos de experiência ensinando a falantes de português.</p>
+                    <div class="prof-tags"><span>Gramática</span><span>Literatura</span><span>Pronúncia</span></div>
+                </div>
+                <div class="prof-card">
+                    <div class="prof-avatar">👨‍🏫</div>
+                    <h3>Prof. Carlos Mendoza</h3>
+                    <span class="prof-badge">Nativo · México</span>
+                    <p>Mestre em linguística hispânica. Especialista em espanhol latino-americano e conversação natural.</p>
+                    <div class="prof-tags"><span>Conversação</span><span>Vocabulário</span><span>Cultura</span></div>
+                </div>
+                <div class="prof-card">
+                    <div class="prof-avatar">👩‍💼</div>
+                    <h3>Prof.ª Ana Beatriz Silva</h3>
+                    <span class="prof-badge">Bilíngue · Brasil</span>
+                    <p>Tradutora e professora certificada. Especialista em tradução português-espanhol e dificuldades dos brasileiros.</p>
+                    <div class="prof-tags"><span>Iniciantes</span><span>Tradução</span><span>Negócios</span></div>
+                </div>
+                <div class="prof-card">
+                    <div class="prof-avatar">👨‍💻</div>
+                    <h3>Prof. Diego Ramírez</h3>
+                    <span class="prof-badge">Nativo · Argentina</span>
+                    <p>Especialista em espanhol rioplatense, tango e cultura argentina. Professor de literatura e expressões idiomáticas.</p>
+                    <div class="prof-tags"><span>Expressões</span><span>Avançado</span><span>Cultura</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEÇÃO: CONTATO ===== -->
+    <section class="secao" id="contato">
+        <div class="contato-container">
+            <h2>📬 Fale Conosco</h2>
+            <p class="sub-titulo">Dúvidas, sugestões ou quer saber mais sobre nossos cursos?</p>
+            <div class="contato-grid">
+                <div class="contato-info">
+                    <h3>Informações de Contato</h3>
+                    <div class="contato-item"><span>📧</span><div><strong>Email</strong><p>contato@spanishworld.com.br</p></div></div>
+                    <div class="contato-item"><span>📱</span><div><strong>WhatsApp</strong><p>+55 (11) 99999-0000</p></div></div>
+                    <div class="contato-item"><span>📍</span><div><strong>Endereço</strong><p>São Paulo, SP — Brasil</p></div></div>
+                    <div class="contato-item"><span>⏰</span><div><strong>Horário de Atendimento</strong><p>Seg–Sex: 8h às 20h</p></div></div>
+                    <div class="redes-sociais">
+                        <h4>Redes Sociais</h4>
+                        <div class="redes-btns">
+                            <button class="rede-btn insta">📸 Instagram</button>
+                            <button class="rede-btn youtube">▶️ YouTube</button>
+                            <button class="rede-btn tiktok">🎵 TikTok</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="contato-form">
+                    <h3>Enviar Mensagem</h3>
+                    <div class="form-contato">
+                        <input type="text" placeholder="Seu nome" class="input-contato">
+                        <input type="email" placeholder="Seu email" class="input-contato">
+                        <select class="input-contato">
+                            <option>Selecione o assunto...</option>
+                            <option>Dúvida sobre planos</option>
+                            <option>Sugestão de melhoria</option>
+                            <option>Problema técnico</option>
+                            <option>Parceria</option>
+                            <option>Outro</option>
+                        </select>
+                        <textarea placeholder="Sua mensagem..." class="input-contato" rows="5"></textarea>
+                        <button class="btn-primary" onclick="enviarContato()">📤 Enviar Mensagem</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div><!-- /site -->
+
+<!-- MASCOTE -->
+<div class="mascote" id="mascote"></div>
+
+<!-- MODAL CARDS -->
+<div class="modal-card" id="modalCard" onclick="fecharDetalheCard()">
+    <div class="modal-conteudo" onclick="event.stopPropagation()">
+        <span class="modal-fechar" onclick="fecharDetalheCard()">✕</span>
+        <div id="conteudoModal"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
